@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#fdeef2" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="For Shetu" />
+<title>For Shetu 🤍</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #f6c6d3;
+    --pink-deep: #e79bb0;
+    --rose-text: #9c4f66;
+    --cream: #fff8f6;
+    --ink: #5a4049;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { height: 100%; background: #f9dfe7; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--ink);
+    background: radial-gradient(ellipse at top, #fff 0%, #fdeef2 45%, #f9dfe7 100%) fixed;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding:
+      max(16px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      max(20px, env(safe-area-inset-bottom))
+      max(16px, env(safe-area-inset-left));
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* falling petals */
+  .petal {
+    position: fixed;
+    top: -40px;
+    width: 14px; height: 18px;
+    border-radius: 80% 0 80% 0;
+    pointer-events: none;
+    z-index: 5;
+    opacity: .85;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(var(--drift), 110vh) rotate(var(--spin)); }
+  }
+
+  .scene-wrap {
+    width: 100%; max-width: 900px;
+    flex: 1 1 auto;
+    min-height: 34vh;
+    position: relative;
+  }
+  svg.scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  @media (max-width: 600px) {
+    .letter { padding: 26px 20px 22px !important; border-radius: 18px !important; }
+    .letter h1 { margin-bottom: 8px !important; }
+    .letter p { margin: 10px 0 !important; }
+    .actions { margin-top: 18px !important; }
+  }
+
+  /* ---------- boy animation ---------- */
+  .walker   { animation: walk 4.2s cubic-bezier(.35,.1,.4,1) forwards; }
+  .bob      { animation: bob .42s ease-in-out 10; }
+  .leg-a    { transform-origin: 0px -100px; animation: stepA .84s ease-in-out 5; }
+  .leg-b    { transform-origin: 0px -100px; animation: stepB .84s ease-in-out 5; }
+  .arm-back { transform-origin: -4px -165px; animation: stepA .84s ease-in-out 5; }
+  .arm-front{ transform-origin: 8px -165px; animation: offer 1.4s 4.3s cubic-bezier(.4,0,.2,1) forwards; }
+  .bouquet-hold { transform-origin: 0px 0px; animation: counter 1.4s 4.3s cubic-bezier(.4,0,.2,1) forwards; }
+  .head     { transform-origin: 4px -180px; animation: shy 1.4s 4.3s ease forwards; }
+  .eye      { transform-origin: 20px -208px; animation: blink 4s 1s infinite; }
+
+  @keyframes walk  { from { transform: translateX(-200px); } to { transform: translateX(330px); } }
+  @keyframes bob   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes stepA { 0%,100% { transform: rotate(0); } 25% { transform: rotate(20deg); } 75% { transform: rotate(-20deg); } }
+  @keyframes stepB { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-20deg); } 75% { transform: rotate(20deg); } }
+  @keyframes offer { to { transform: rotate(-55deg); } }
+  @keyframes counter { to { transform: rotate(70deg); } }
+  @keyframes shy   { to { transform: rotate(8deg); } }
+  @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+
+  .heart-float { opacity: 0; animation: heartUp 3.5s 5.6s ease-out forwards; }
+  .heart-float.h2 { animation-delay: 6.3s; }
+  .heart-float.h3 { animation-delay: 7s; }
+  @keyframes heartUp {
+    0%   { opacity: 0; transform: translateY(0) scale(.6); }
+    20%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.1); }
+  }
+
+  .ground-bloom { transform-box: fill-box; transform-origin: center bottom; transform: scale(0); animation: grow .9s ease-out forwards; }
+  @keyframes grow { to { transform: scale(1); } }
+
+  /* ---------- letter ---------- */
+  .letter {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 640px;
+    margin-top: 8px;
+    padding: 36px 34px 32px;
+    background: rgba(255, 255, 255, .72);
+    border: 1px solid rgba(231, 155, 176, .35);
+    border-radius: 22px;
+    box-shadow: 0 18px 50px rgba(200, 120, 145, .18);
+    backdrop-filter: blur(6px);
+    text-align: center;
+  }
+  .letter h1 {
+    font-family: "Dancing Script", cursive;
+    font-size: clamp(2.6rem, 7vw, 3.6rem);
+    color: var(--rose-text);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .letter p {
+    font-size: clamp(1.15rem, 3.2vw, 1.4rem);
+    line-height: 1.65;
+    margin: 14px 0;
+  }
+  .letter p em { color: var(--rose-text); }
+  .letter .sign {
+    font-family: "Dancing Script", cursive;
+    font-size: 1.7rem;
+    color: var(--rose-text);
+    margin-top: 22px;
+  }
+  .reveal { opacity: 0; transform: translateY(14px); animation: rise 1.4s ease forwards; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  .actions { margin-top: 26px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  button {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.15rem;
+    padding: 12px 26px;
+    border-radius: 999px;
+    border: 1.5px solid var(--pink-deep);
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(231,155,176,.35); }
+  .btn-yes { background: linear-gradient(135deg, #f9d3de, #f3b3c5); color: #7a3348; }
+  .btn-time { background: #fff; color: var(--rose-text); }
+
+  .response {
+    min-height: 2em;
+    margin-top: 20px;
+    font-family: "Dancing Script", cursive;
+    font-size: 1.6rem;
+    color: var(--rose-text);
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .response.show { opacity: 1; }
+
+  .replay {
+    margin-top: 18px;
+    font-size: .95rem;
+    color: #b07a8a;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    padding: 4px;
+  }
+  .replay:hover { box-shadow: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scene-wrap">
+  <svg class="scene" viewBox="0 0 900 470" preserveAspectRatio="xMidYMax slice" aria-label="A boy walking in and offering a bouquet of white and pink flowers">
+    <defs>
+      <!-- 5-petal bloom -->
+      <g id="bloom-white">
+        <g fill="#ffffff" stroke="#f1dde3" stroke-width="1">
+          <ellipse cx="0" cy="-9" rx="7" ry="10"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(288)"/>
+        </g>
+        <circle r="4" fill="#f7e3a8"/>
+      </g>
+      <g id="bloom-pink">
+        <g fill="#f8c9d6" stroke="#eeaabd" stroke-width="1">
+          <ellipse cx="0" cy="-9" rx="7" ry="10"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-9" rx="7" ry="10" transform="rotate(288)"/>
+        </g>
+        <circle r="4" fill="#fbe7c4"/>
+      </g>
+      <!-- rose-like bud -->
+      <g id="bud-pink">
+        <circle r="9" fill="#f4b6c7"/>
+        <path d="M-5,-1 Q0,-9 5,-1 Q0,4 -5,-1Z" fill="#e99bb1"/>
+        <path d="M-7,2 Q0,9 7,2" stroke="#e99bb1" stroke-width="1.5" fill="none"/>
+      </g>
+      <path id="heart" d="M0,6 C-12,-4 -10,-16 0,-10 C10,-16 12,-4 0,6Z"/>
+      <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fbe3ea"/>
+        <stop offset="1" stop-color="#f6d0dc"/>
+      </linearGradient>
+    </defs>
+
+    <!-- background -->
+    <circle cx="720" cy="110" r="60" fill="#fff" opacity=".7"/>
+    <circle cx="720" cy="110" r="90" fill="#fff" opacity=".25"/>
+    <path d="M0,430 Q220,395 450,420 T900,410 L900,470 L0,470Z" fill="url(#hill)"/>
+
+    <!-- blooms that grow once the bouquet is offered -->
+    <g>
+      <use href="#bloom-white" class="ground-bloom" x="560" y="425" style="animation-delay:5.8s"/>
+      <use href="#bloom-pink"  class="ground-bloom" x="600" y="420" style="animation-delay:6.0s"/>
+      <use href="#bloom-white" class="ground-bloom" x="650" y="418" style="animation-delay:6.2s"/>
+      <use href="#bud-pink"    class="ground-bloom" x="700" y="420" style="animation-delay:6.4s"/>
+      <use href="#bloom-pink"  class="ground-bloom" x="750" y="416" style="animation-delay:6.6s"/>
+      <use href="#bloom-white" class="ground-bloom" x="800" y="414" style="animation-delay:6.8s"/>
+      <use href="#bloom-pink"  class="ground-bloom" x="850" y="412" style="animation-delay:7.0s"/>
+      <use href="#bloom-white" class="ground-bloom" x="70"  y="424" style="animation-delay:6.3s"/>
+      <use href="#bloom-pink"  class="ground-bloom" x="120" y="420" style="animation-delay:6.5s"/>
+    </g>
+
+    <!-- hearts floating up from the bouquet -->
+    <g transform="translate(560,190)">
+      <use href="#heart" class="heart-float"    fill="#f3a9bd" x="0"   y="0"/>
+      <use href="#heart" class="heart-float h2" fill="#f8c9d6" x="28"  y="-10"/>
+      <use href="#heart" class="heart-float h3" fill="#efa0b6" x="-18" y="-6"/>
+    </g>
+
+    <!-- the boy -->
+    <g class="walker">
+      <g transform="translate(0,440)">
+        <g class="bob">
+          <!-- back arm -->
+          <g class="arm-back">
+            <rect x="-13" y="-168" width="17" height="70" rx="8.5" fill="#7fa3cc"/>
+            <circle cx="-4" cy="-96" r="9" fill="#efc19c"/>
+          </g>
+          <!-- back leg -->
+          <g class="leg-b">
+            <rect x="1" y="-104" width="19" height="98" rx="9" fill="#33415f"/>
+            <ellipse cx="17" cy="-5" rx="17" ry="7.5" fill="#3a2e33"/>
+          </g>
+          <!-- front leg -->
+          <g class="leg-a">
+            <rect x="-14" y="-104" width="19" height="98" rx="9" fill="#3d4d6e"/>
+            <ellipse cx="2" cy="-5" rx="17" ry="7.5" fill="#4a3a40"/>
+          </g>
+          <!-- torso -->
+          <path d="M-26,-160 Q-28,-178 -8,-180 L18,-180 Q36,-178 32,-160 L30,-98 Q2,-90 -24,-98Z" fill="#9dbde0"/>
+          <path d="M-8,-180 L2,-166 L12,-180" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+          <!-- neck + head -->
+          <rect x="-4" y="-190" width="14" height="14" rx="5" fill="#efc19c"/>
+          <g class="head">
+            <circle cx="-22" cy="-206" r="7" fill="#efc19c"/>
+            <circle cx="4" cy="-210" r="32" fill="#f4caa6"/>
+            <path d="M-28,-212 Q-30,-246 6,-246 Q36,-246 38,-222 Q26,-232 14,-226 Q6,-236 -6,-228 Q-14,-232 -20,-222 Q-24,-216 -28,-212Z" fill="#3b2a24"/>
+            <g class="eye"><ellipse cx="20" cy="-208" rx="3.2" ry="4" fill="#2d2226"/></g>
+            <ellipse cx="22" cy="-196" rx="6" ry="3.5" fill="#f4a9b9" opacity=".7"/>
+            <path d="M26,-190 Q31,-188 33,-192" fill="none" stroke="#a5636f" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <!-- front arm with bouquet -->
+          <g class="arm-front">
+            <rect x="0" y="-168" width="17" height="72" rx="8.5" fill="#8db0d8"/>
+            <g transform="translate(8,-94)">
+              <g class="bouquet-hold">
+                <!-- stems & leaves -->
+                <path d="M-3,-4 L-10,-48 M0,-4 L0,-56 M3,-4 L12,-48" stroke="#8fb592" stroke-width="2.4" fill="none"/>
+                <ellipse cx="-16" cy="-44" rx="5" ry="11" fill="#a9cba9" transform="rotate(-35 -16 -44)"/>
+                <ellipse cx="18"  cy="-44" rx="5" ry="11" fill="#a9cba9" transform="rotate(35 18 -44)"/>
+                <!-- blooms -->
+                <use href="#bloom-white" x="-16" y="-58"/>
+                <use href="#bloom-pink"  x="14"  y="-60"/>
+                <use href="#bud-pink"    x="-2"  y="-66"/>
+                <use href="#bloom-pink"  x="-22" y="-76"/>
+                <use href="#bloom-white" x="2"   y="-86"/>
+                <use href="#bloom-white" x="24"  y="-78"/>
+                <use href="#bud-pink"    x="-12" y="-92"/>
+                <use href="#bud-pink"    x="18"  y="-96"/>
+                <!-- wrapping paper -->
+                <path d="M-26,-50 L0,14 L26,-50 Q0,-38 -26,-50Z" fill="#fff4f7" stroke="#f1c7d3" stroke-width="1.2"/>
+                <path d="M-14,-46 L0,14" stroke="#f6dbe3" stroke-width="1"/>
+                <!-- ribbon -->
+                <path d="M-8,-14 Q-22,-22 -18,-8 Q-12,-6 -8,-14Z M8,-14 Q22,-22 18,-8 Q12,-6 8,-14Z" fill="#eea3b8"/>
+                <circle cx="0" cy="-13" r="4" fill="#e48ea6"/>
+                <path d="M-3,-11 L-8,6 M3,-11 L8,6" stroke="#eea3b8" stroke-width="2.4" stroke-linecap="round"/>
+              </g>
+            </g>
+            <circle cx="8" cy="-94" r="9" fill="#f4caa6"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<main class="letter">
+  <h1 class="reveal" style="animation-delay:5.4s">Dear Shetu,</h1>
+
+  <p class="reveal" style="animation-delay:6.4s">
+    I'm truly sorry for hurting you. It was never intentional.
+  </p>
+
+  <p class="reveal" style="animation-delay:7.8s">
+    I didn't know you cared… <em>and finding out that you did made me so happy.</em>
+  </p>
+
+  <div class="actions reveal" style="animation-delay:9.2s">
+    <button class="btn-yes" id="forgive">I forgive you 🌸</button>
+  </div>
+
+  <button class="replay reveal" style="animation-delay:9.8s" id="replay">replay ↺</button>
+</main>
+
+<script>
+  const colors = ["#ffffff", "#fbe4ea", "#f8c9d6", "#f3b3c5", "#fff3f6"];
+
+  function petal(burst = false) {
+    const p = document.createElement("div");
+    p.className = "petal";
+    const size = 10 + Math.random() * 10;
+    p.style.width = size + "px";
+    p.style.height = size * 1.25 + "px";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.boxShadow = "0 0 2px rgba(230,150,170,.5)";
+    p.style.setProperty("--drift", (Math.random() * 200 - 100) + "px");
+    p.style.setProperty("--spin", (Math.random() * 720 - 360) + "deg");
+    const dur = burst ? 4 + Math.random() * 3 : 8 + Math.random() * 6;
+    p.style.animationDuration = dur + "s";
+    if (burst) p.style.animationDelay = Math.random() * 1.5 + "s";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), (dur + 2) * 1000);
+  }
+
+  // gentle petal rain once the bouquet is offered
+  setTimeout(() => setInterval(() => petal(), 650), 5600);
+
+  document.getElementById("forgive").addEventListener("click", () => {
+    for (let i = 0; i < 70; i++) petal(true);
+  });
+
+  document.getElementById("replay").addEventListener("click", () => location.reload());
+</script>
+</body>
+</html>
